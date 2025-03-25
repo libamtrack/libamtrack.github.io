@@ -28,6 +28,14 @@ jobs:
       - name: Build the site
         run: yarn build
 
+      - name: Check for hard links
+        run: find ./build -type f -links +1 -exec ls -l {} \;
+
+      - name: Remove hard links
+        run: |
+          cp -rL build fixed_build
+          mv fixed_build build
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
