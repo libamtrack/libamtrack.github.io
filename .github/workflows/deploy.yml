@@ -15,26 +15,21 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: yarn
 
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --frozen-lockfile
 
       - name: Build the site
         run: yarn build
-
-      - name: Check for hard links
-        run: find ./build -type f -links +1 -exec ls -l {} \;
-
-      - name: Remove hard links
-        run: |
-          cp -rL build fixed_build
-          mv fixed_build build
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -51,6 +46,10 @@ jobs:
     permissions:
       pages: write
       id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Deploy to GitHub Pages
