@@ -11,6 +11,7 @@ const config: Config = {
 
   // Set the production url of your site here
   url: 'https://libamtrack.github.io',
+
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
@@ -37,7 +38,6 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/libamtrack/libamtrack.github.io/tree/main/',
@@ -63,14 +63,20 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
-          label: 'General',
+          label: 'C Library',
         },
         // {to: '/blog', label: 'Blog', position: 'left'},
-        // {
-        //   href: 'https://github.com/facebook/docusaurus',
-        //   label: 'GitHub',
-        //   position: 'right',
-        // },
+        {
+          type: 'docSidebar',
+          sidebarId: 'pythonSidebar',
+          position: 'left',
+          label: 'Python wrapper',
+        },
+        {
+          href: 'https://libamtrack.github.io/web/',
+          label: 'Web Interface',
+          position: 'left',
+        },
       ],
     },
     footer: {
