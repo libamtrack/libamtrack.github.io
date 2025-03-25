@@ -3,9 +3,10 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # Replace with your default branch if different
-
-  # Optional: Run the workflow manually
+      - main
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
@@ -19,7 +20,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18  # Ensure this matches the required Node.js version
+          node-version: 22
 
       - name: Install dependencies
         run: yarn install
@@ -28,17 +29,23 @@ jobs:
         run: yarn build
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
-          path: ./build  # Path to the build output directory
+          name: github-pages
+          path: ./build
+          if-no-files-found: 'error'
+          retention-days: 2
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     permissions:
-      pages: write  # Required to deploy to GitHub Pages
-      id-token: write  # Required for authentication
+      pages: write
+      id-token: write
 
     steps:
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
+        with:
+          artifact-name: github-pages
