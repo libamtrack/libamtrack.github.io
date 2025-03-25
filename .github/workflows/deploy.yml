@@ -31,21 +31,21 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: pages-artifact
+          name: github-pages
           path: ./build
           if-no-files-found: 'error'
           retention-days: 2
 
-  # deploy:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   if: github.ref == 'refs/heads/main'
-  #   permissions:
-  #     pages: write
-  #     id-token: write
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      pages: write
+      id-token: write
 
-  #   steps:
-  #     - name: Deploy to GitHub Pages
-  #       uses: actions/deploy-pages@v2
-  #       with:
-  #         artifact-name: pages-artifact
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+        with:
+          artifact-name: github-pages
