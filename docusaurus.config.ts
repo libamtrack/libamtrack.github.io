@@ -55,7 +55,7 @@ const config: Config = {
       title: 'libamtrack',
       logo: {
         alt: 'libamtrack Logo',
-        src: 'img/logo.svg',
+        src: 'img/logo.png',
       },
       items: [
         {
