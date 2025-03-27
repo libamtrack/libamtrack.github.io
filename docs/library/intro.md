@@ -1,7 +1,6 @@
-# libamtrack C Library Documentation  
+# C Library
 
-The `libamtrack` C code library is available at:  
-🔗 [GitHub Repository](https://github.com/libamtrack/library)  
+The `libamtrack` C code library is available at: 🔗 [GitHub Repository](https://github.com/libamtrack/library)  
 
 ## Getting Started  
 
