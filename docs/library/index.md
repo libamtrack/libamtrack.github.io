@@ -1,19 +1,11 @@
-# C Library
+# Introduction
 
 The `libamtrack` C code library is available at: 🔗 [GitHub Repository](https://github.com/libamtrack/library)  
-
-## Getting Started  
-
-The easiest way to use `libamtrack` is through:  
-
-- **Web Application:** A user-friendly interface for common calculations.  
-- **Python Wrapper:** Provides easy access to `libamtrack` functionalities without requiring C programming.  
-
 Using `libamtrack` in **C code** is intended for programmers familiar with C.  
 
 ## Documentation  
 
-Most of the documentation is available in the repository:  
+Most of the documentation is available in the repository:
 
 - **Main README:** [README.md](https://github.com/libamtrack/library/blob/master/README.md)  
 - **Developer Documentation:** [README_DEVELOPERS](https://github.com/libamtrack/library/blob/master/README_DEVELOPERS)  
