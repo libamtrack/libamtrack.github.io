@@ -1,3 +1,8 @@
+---
+sidebar_position: 1
+---
+
+
 # Introduction
 
 pyamtrack is a Python wrapper for the libamtrack library, making it easier to access and use libamtrack's functionality directly from Python.
