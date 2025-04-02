@@ -11,6 +11,6 @@ yarn install
 ## To serve the documentation locally run:
 
 ```bash
-yarn start
+yarn run start
 ```
 This will start a local server at `http://localhost:3000` and watch for changes in the documentation files.
