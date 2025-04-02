@@ -1,6 +1,7 @@
 # How to install
 
 pyamtrack can be installed as a Python package, and it is available in two main forms: a stable release and an ongoing development version.
+The wrapper source code is hosted in following repository: https://github.com/libamtrack/pyamtrack.git
 
 ## Recommended: Development Release
 
