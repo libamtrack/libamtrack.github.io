@@ -29,7 +29,7 @@ The `pyamtrack.converters.beta_from_energy` function computes the relative speed
 
 ### Single Value Input
 ```python
-import pyamtrack.converters
+import pyamtrack
 
 energy = 150.0  # MeV/u
 beta = pyamtrack.converters.beta_from_energy(energy)
@@ -38,7 +38,7 @@ print(f"Beta: {beta}")
 
 ### NumPy Array Input
 ```python
-import pyamtrack.converters
+import pyamtrack
 import numpy as np
 
 energies = np.array([10.0, 50.0, 100.0, 500.0])  # MeV/u
@@ -48,7 +48,7 @@ print(f"Betas: {betas}")
 
 ### Python List Input
 ```python
-import pyamtrack.converters
+import pyamtrack
 
 energies = [10.0, 50.0, 100.0, 500.0]  # MeV/u
 betas = pyamtrack.converters.beta_from_energy(energies)
