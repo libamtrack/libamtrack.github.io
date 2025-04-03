@@ -1,10 +1,10 @@
 # Energy to Beta
 
-The `beta_from_energy` function calculates the relativistic speed (beta) of a particle based on its energy per nucleon. 
+The `pyamtrack.converters.beta_from_energy` function calculates the relativistic speed (beta) of a particle based on its energy per nucleon.
 
 ## Function Purpose
 
-The `beta_from_energy` function computes the relative speed of a particle (`beta = v/c`), where `v` is the particle's velocity and `c` is the speed of light. 
+The `pyamtrack.converters.beta_from_energy` function computes the relative speed of a particle (`beta = v/c`), where `v` is the particle's velocity and `c` is the speed of light.
 
 ## Input Parameters
 
@@ -22,48 +22,48 @@ The `beta_from_energy` function computes the relative speed of a particle (`beta
 
 ## Notes
 
-- The input energy must be non-negative.  Negative energy values are invalid and will cause np.nan to be returned.
+- The input energy must be non-negative. Negative energy values are invalid and will cause `np.nan` to be returned.
 - The function supports both scalar and vectorized operations, making it efficient for batch calculations.
 
 ## Example Usage
 
 ### Single Value Input
 ```python
-import pyamtrack
+import pyamtrack.converters
 
 energy = 150.0  # MeV/u
-beta = pyamtrack.beta_from_energy(energy)
+beta = pyamtrack.converters.beta_from_energy(energy)
 print(f"Beta: {beta}")
 ```
 
 ### NumPy Array Input
 ```python
-import pyamtrack
+import pyamtrack.converters
 import numpy as np
 
 energies = np.array([10.0, 50.0, 100.0, 500.0])  # MeV/u
-betas = pyamtrack.beta_from_energy(energies)
+betas = pyamtrack.converters.beta_from_energy(energies)
 print(f"Betas: {betas}")
 ```
 
 ### Python List Input
 ```python
-import pyamtrack
+import pyamtrack.converters
 
 energies = [10.0, 50.0, 100.0, 500.0]  # MeV/u
-betas = pyamtrack.beta_from_energy(energies)
+betas = pyamtrack.converters.beta_from_energy(energies)
 print(f"Betas: {betas}")
 ```
 
 ### Edge Cases
 - **Zero Energy**:
   ```python
-  beta = pyamtrack.beta_from_energy(0.0)
+  beta = pyamtrack.converters.beta_from_energy(0.0)
   print(f"Beta for zero energy: {beta}")  # Output: 0.0
   ```
 - **Empty Input**:
   ```python
-  betas = pyamtrack.beta_from_energy([])
+  betas = pyamtrack.converters.beta_from_energy([])
   print(f"Beta for empty input: {betas}")  # Output: []
   ```
 
@@ -73,7 +73,7 @@ print(f"Betas: {betas}")
 - Example:
   ```python
   try:
-      beta = pyamtrack.beta_from_energy("invalid")
+      beta = pyamtrack.converters.beta_from_energy("invalid")
   except ValueError as e:
       print(f"Error: {e}")
   ```

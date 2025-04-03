@@ -22,7 +22,7 @@ For more detailed installation instructions, including installing from the GitHu
 
 Here's a quick example demonstrating how to use pyamtrack:
 ```python
-import pyamtrack
+import pyamtrack.converters
 
-print(pyamtrack.beta_from_energy(150))
+print(pyamtrack.converters.beta_from_energy(150))
 ```
