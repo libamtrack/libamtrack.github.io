@@ -13,6 +13,23 @@ The tables below show the status of various function groups:
 - **During Porting**: Function is being implemented or tested
 - **Not Ported**: Function is available in libamtrack but not yet ported to pyamtrack
 
+## Particle Data
+
+Functions for accessing and manipulating particle data.
+
+| Python Module | Status | C/C++ Source |
+|-----------------|--------|--------------|
+| `particle` | Not Ported | [AT_ParticleData.h](https://github.com/libamtrack/library/blob/master/include/AT_DataParticle.h#L82) |
+
+## Material Data
+
+Functions for accessing and manipulating material properties.
+
+| Python Module | Status | C/C++ Source |
+|-----------------|--------|--------------|
+| `material` | Not Ported | [AT_MaterialData.h](https://github.com/libamtrack/library/blob/master/include/AT_DataMaterial.h#L82) |
+
+
 ## Converters
 
 Functions for converting between different physical quantities.
@@ -41,7 +58,6 @@ Functions for calculating stopping power of ions and protons and range of partic
 | `stopping.csda_range` | Not Ported | [AT_StoppingPower.h](https://github.com/libamtrack/library/blob/master/include/AT_DataRange.h#L112) |
 | `stopping.bortfeld_proton_range` | Not Ported | [AT_ProtonAnalyticalBeamParameters.h](https://github.com/libamtrack/library/blob/master/include/AT_ProtonAnalyticalBeamParameters.h#L90) |
 
-
 ## Energy Loss Straggling
 
 Functions for energy loss straggling calculations.
@@ -50,6 +66,22 @@ Functions for energy loss straggling calculations.
 |-----------------|--------|--------------|
 | `straggling.energy_loss_distribution` | Not Ported | [AT_EnergyLoss.c](https://github.com/libamtrack/library/blob/master/src/AT_EnergyLoss.c#L362) |
 
+## Scattering
+
+Functions for particle scattering calculations.
+
+| Python Function | Status | C/C++ Source |
+|-----------------|--------|--------------|
+| `scattering.angle_distribution` | Not Ported | [AT_MultipleCoulombScattering.h](https://github.com/libamtrack/library/blob/master/include/AT_MultipleCoulombScattering.h#L247) |
+
+## Proton Pencil Beam Models
+
+Functions for proton pencil beam dose and LET calculations.
+
+| Python Function | Status | C/C++ Source |
+|-----------------|--------|--------------|
+| `proton.bortfeld_dose` | Not Ported | [AT_ProtonAnalyticalModels.h](https://github.com/libamtrack/library/blob/master/include/AT_ProtonAnalyticalModels.h#L63) |
+| `proton.wilkens_let` | Not Ported | [AT_ProtonAnalyticalModels.h](https://github.com/libamtrack/library/blob/master/include/AT_ProtonAnalyticalModels.h#L106) |
 
 ## Track Structure Models
 
@@ -59,6 +91,15 @@ Functions for track structure calculations.
 |-----------------|--------|--------------|
 | `track.radial_dose` | Not Ported | [AT_RDD.h](https://github.com/libamtrack/library/blob/master/include/AT_RDD.h) |
 | `track.track_width` | Not Ported | [AT_RDD.h](https://github.com/libamtrack/library/blob/master/include/AT_RDD.h) |
+
+## Detector Response Models
+
+Functions for calculating detector response using various models.
+
+| Python Function | Status | C/C++ Source |
+|-----------------|--------|--------------|
+| `detector.hcp_response` | Not Ported | [AT_SuccessiveConvolutions.h](https://github.com/libamtrack/library/blob/master/include/AT_SuccessiveConvolutions.h) |
+| `detector.gamma_response` | Not Ported | [AT_GammaResponse.h](https://github.com/libamtrack/library/blob/master/include/AT_GammaResponse.h) |
 
 ## Cell Survival Models
 
