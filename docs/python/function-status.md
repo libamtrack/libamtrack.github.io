@@ -19,10 +19,16 @@ Functions for converting between different physical quantities.
 
 | Python Function | Status | C/C++ Source |
 |-----------------|--------|--------------|
-| [`converters.beta_from_energy`](API/converters.md#beta_from_energy) | Fully Ported | [AT_PhysicsRoutines.c](https://github.com/libamtrack/library/blob/master/src/AT_PhysicsRoutines.c#L39) |
-| [`converters.energy_from_beta`](API/converters.md#energy_from_beta) | Fully Ported | [AT_PhysicsRoutines.c](https://github.com/libamtrack/library/blob/master/src/AT_PhysicsRoutines.c#L55) |
-| `converters.energy_from_momentum` | Not Ported | [AT_PhysicsRoutines.c](https://github.com/libamtrack/library/blob/master/src/AT_PhysicsRoutines.c#L90) |
-| `converters.momentum_from_energy` | Not Ported | [AT_PhysicsRoutines.c](https://github.com/libamtrack/library/blob/master/src/AT_PhysicsRoutines.c#L68) |
+| [`converters.beta_from_energy`](API/converters.md#beta_from_energy) | Fully Ported | [AT_PhysicsRoutines.h](https://github.com/libamtrack/library/blob/master/include/AT_PhysicsRoutines.h#L68) |
+| [`converters.energy_from_beta`](API/converters.md#energy_from_beta) | Fully Ported | [AT_PhysicsRoutines.h](https://github.com/libamtrack/library/blob/master/include/AT_PhysicsRoutines.h#L68) |
+| `converters.gamma_from_energy` | Not Ported | [AT_PhysicsRoutines.h](https://github.com/libamtrack/library/blob/master/include/AT_PhysicsRoutines.h#L152) |
+| `converters.energy_from_gamma` | Not Ported | [AT_PhysicsRoutines.h](https://github.com/libamtrack/library/blob/master/include/AT_PhysicsRoutines.h#L112) |
+| `converters.energy_from_momentum` | Not Ported | [AT_PhysicsRoutines.h](https://github.com/libamtrack/library/blob/master/include/AT_PhysicsRoutines.h#L132) |
+| `converters.momentum_from_energy` | Not Ported | [AT_PhysicsRoutines.h](https://github.com/libamtrack/library/blob/master/include/AT_PhysicsRoutines.h#L419) |
+| `converters.dose_from_fluence` | Not Ported | [AT_PhysicsRoutines.h](https://github.com/libamtrack/library/blob/master/include/AT_PhysicsRoutines.h#L446) |
+| `converters.fluence_from_dose` | Not Ported | [AT_PhysicsRoutines.h](https://github.com/libamtrack/library/blob/master/include/AT_PhysicsRoutines.h#L485) |
+| `converters.energy_per_amu_from_energy` | Not Ported | [AT_PhysicsRoutines.h](https://github.com/libamtrack/library/blob/master/include/AT_PhysicsRoutines.h#L51) |
+| `converters.energy_from_energy_per_amu` | Not Ported | [AT_PhysicsRoutines.h](https://github.com/libamtrack/library/blob/master/include/AT_PhysicsRoutines.h#L59) |
 
 ## Stopping Power
 
@@ -30,10 +36,10 @@ Functions for calculating stopping power of particles in materials.
 
 | Python Function | Status | C/C++ Source |
 |-----------------|--------|--------------|
-| `stopping.calculate_stopping_power` | During Porting | [AT_StoppingPower.c](https://github.com/libamtrack/library/blob/master/src/AT_StoppingPower.c) |
-| `stopping.calculate_csda_range` | Not Ported | [AT_StoppingPower.c](https://github.com/libamtrack/library/blob/master/src/AT_StoppingPower.c) |
-| `stopping.calculate_mass_stopping_power` | Not Ported | [AT_StoppingPower.c](https://github.com/libamtrack/library/blob/master/src/AT_StoppingPower.c) |
-| `stopping.get_stopping_data_from_pstar` | Not Ported | [AT_StoppingPower.c](https://github.com/libamtrack/library/blob/master/src/AT_StoppingPower.c) |
+| `stopping.calculate_stopping_power` | During Porting | [AT_StoppingPower.h](https://github.com/libamtrack/library/blob/master/include/AT_StoppingPower.h) |
+| `stopping.calculate_csda_range` | Not Ported | [AT_StoppingPower.h](https://github.com/libamtrack/library/blob/master/include/AT_StoppingPower.h) |
+| `stopping.calculate_mass_stopping_power` | Not Ported | [AT_StoppingPower.h](https://github.com/libamtrack/library/blob/master/include/AT_StoppingPower.h) |
+| `stopping.get_stopping_data_from_pstar` | Not Ported | [AT_StoppingPower.h](https://github.com/libamtrack/library/blob/master/include/AT_StoppingPower.h) |
 
 ## Electron Range
 
@@ -41,10 +47,10 @@ Functions for electron range calculations.
 
 | Python Function | Status | C/C++ Source |
 |-----------------|--------|--------------|
-| [`electron.max_electron_range`](API/electron.md#max_electron_range) | Fully Ported | [AT_ElectronRange.c](https://github.com/libamtrack/library/blob/master/src/AT_ElectronRange.c) |
-| `electron.effective_charge_from_energy` | During Porting | [AT_ElectronRange.c](https://github.com/libamtrack/library/blob/master/src/AT_ElectronRange.c) |
-| `electron.electron_range_butts` | Not Ported | [AT_ElectronRange.c](https://github.com/libamtrack/library/blob/master/src/AT_ElectronRange.c) |
-| `electron.electron_range_tabata` | Not Ported | [AT_ElectronRange.c](https://github.com/libamtrack/library/blob/master/src/AT_ElectronRange.c) |
+| [`electron.max_electron_range`](API/electron.md#max_electron_range) | Fully Ported | [AT_ElectronRange.h](https://github.com/libamtrack/library/blob/master/include/AT_ElectronRange.h) |
+| `electron.effective_charge_from_energy` | During Porting | [AT_ElectronRange.h](https://github.com/libamtrack/library/blob/master/include/AT_ElectronRange.h) |
+| `electron.electron_range_butts` | Not Ported | [AT_ElectronRange.h](https://github.com/libamtrack/library/blob/master/include/AT_ElectronRange.h) |
+| `electron.electron_range_tabata` | Not Ported | [AT_ElectronRange.h](https://github.com/libamtrack/library/blob/master/include/AT_ElectronRange.h) |
 
 ## Track Structure Models
 
@@ -52,11 +58,11 @@ Functions for track structure calculations.
 
 | Python Function | Status | C/C++ Source |
 |-----------------|--------|--------------|
-| `track.calculate_radial_dose` | During Porting | [AT_RDD.c](https://github.com/libamtrack/library/blob/master/src/AT_RDD.c) |
-| `track.get_rdd_index` | Not Ported | [AT_RDD.c](https://github.com/libamtrack/library/blob/master/src/AT_RDD.c) |
-| `track.rdd_katz_point_target` | Not Ported | [AT_RDD.c](https://github.com/libamtrack/library/blob/master/src/AT_RDD.c) |
-| `track.rdd_katz_extended_target` | Not Ported | [AT_RDD.c](https://github.com/libamtrack/library/blob/master/src/AT_RDD.c) |
-| `track.rdd_geiss` | Not Ported | [AT_RDD.c](https://github.com/libamtrack/library/blob/master/src/AT_RDD.c) |
+| `track.calculate_radial_dose` | During Porting | [AT_RDD.h](https://github.com/libamtrack/library/blob/master/include/AT_RDD.h) |
+| `track.get_rdd_index` | Not Ported | [AT_RDD.h](https://github.com/libamtrack/library/blob/master/include/AT_RDD.h) |
+| `track.rdd_katz_point_target` | Not Ported | [AT_RDD.h](https://github.com/libamtrack/library/blob/master/include/AT_RDD.h) |
+| `track.rdd_katz_extended_target` | Not Ported | [AT_RDD.h](https://github.com/libamtrack/library/blob/master/include/AT_RDD.h) |
+| `track.rdd_geiss` | Not Ported | [AT_RDD.h](https://github.com/libamtrack/library/blob/master/include/AT_RDD.h) |
 
 ## Cell Survival Models
 
@@ -64,9 +70,9 @@ Functions for calculating cell survival.
 
 | Python Function | Status | C/C++ Source |
 |-----------------|--------|--------------|
-| `survival.katz_model` | Not Ported | [AT_KatzModel.c](https://github.com/libamtrack/library/blob/master/src/AT_KatzModel.c) |
-| `survival.calculate_survival` | Not Ported | [AT_KatzModel.c](https://github.com/libamtrack/library/blob/master/src/AT_KatzModel.c) |
-| `survival.survival_from_dose` | Not Ported | [AT_KatzModel.c](https://github.com/libamtrack/library/blob/master/src/AT_KatzModel.c) |
+| `survival.katz_model` | Not Ported | [AT_KatzModel.h](https://github.com/libamtrack/library/blob/master/include/AT_KatzModel.h) |
+| `survival.calculate_survival` | Not Ported | [AT_KatzModel.h](https://github.com/libamtrack/library/blob/master/include/AT_KatzModel.h) |
+| `survival.survival_from_dose` | Not Ported | [AT_KatzModel.h](https://github.com/libamtrack/library/blob/master/include/AT_KatzModel.h) |
 
 ## Energy Loss Straggling
 
@@ -74,9 +80,9 @@ Functions for energy loss straggling calculations.
 
 | Python Function | Status | C/C++ Source |
 |-----------------|--------|--------------|
-| `straggling.calculate_vavilov_energy_loss` | Not Ported | [AT_EnergyLoss.c](https://github.com/libamtrack/library/blob/master/src/AT_EnergyLoss.c) |
-| `straggling.calculate_landau_energy_loss` | Not Ported | [AT_EnergyLoss.c](https://github.com/libamtrack/library/blob/master/src/AT_EnergyLoss.c) |
-| `straggling.energy_loss_after_slab` | Not Ported | [AT_EnergyLoss.c](https://github.com/libamtrack/library/blob/master/src/AT_EnergyLoss.c) |
+| `straggling.calculate_vavilov_energy_loss` | Not Ported | [AT_EnergyLoss.h](https://github.com/libamtrack/library/blob/master/include/AT_EnergyLoss.h) |
+| `straggling.calculate_landau_energy_loss` | Not Ported | [AT_EnergyLoss.h](https://github.com/libamtrack/library/blob/master/include/AT_EnergyLoss.h) |
+| `straggling.energy_loss_after_slab` | Not Ported | [AT_EnergyLoss.h](https://github.com/libamtrack/library/blob/master/include/AT_EnergyLoss.h) |
 
 ## Contributing to Function Porting
 
