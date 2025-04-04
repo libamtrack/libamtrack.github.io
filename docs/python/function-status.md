@@ -36,21 +36,10 @@ Functions for calculating stopping power of particles in materials.
 
 | Python Function | Status | C/C++ Source |
 |-----------------|--------|--------------|
-| `stopping.calculate_stopping_power` | During Porting | [AT_StoppingPower.h](https://github.com/libamtrack/library/blob/master/include/AT_StoppingPower.h) |
-| `stopping.calculate_csda_range` | Not Ported | [AT_StoppingPower.h](https://github.com/libamtrack/library/blob/master/include/AT_StoppingPower.h) |
-| `stopping.calculate_mass_stopping_power` | Not Ported | [AT_StoppingPower.h](https://github.com/libamtrack/library/blob/master/include/AT_StoppingPower.h) |
-| `stopping.get_stopping_data_from_pstar` | Not Ported | [AT_StoppingPower.h](https://github.com/libamtrack/library/blob/master/include/AT_StoppingPower.h) |
+| `stopping.mass_stopping_power` | Not Ported | [AT_StoppingPower.h](https://github.com/libamtrack/library/blob/master/include/AT_StoppingPower.h#L151) |
+| `electron.max_electron_range` | Not Ported | [AT_ElectronRange.h](https://github.com/libamtrack/library/blob/master/include/AT_ElectronRange.h) |
+| `stopping.csda_range` | Not Ported | [AT_StoppingPower.h](https://github.com/libamtrack/library/blob/master/include/AT_DataRange.h#L112) |
 
-## Electron Range
-
-Functions for electron range calculations.
-
-| Python Function | Status | C/C++ Source |
-|-----------------|--------|--------------|
-| [`electron.max_electron_range`](API/electron.md#max_electron_range) | Fully Ported | [AT_ElectronRange.h](https://github.com/libamtrack/library/blob/master/include/AT_ElectronRange.h) |
-| `electron.effective_charge_from_energy` | During Porting | [AT_ElectronRange.h](https://github.com/libamtrack/library/blob/master/include/AT_ElectronRange.h) |
-| `electron.electron_range_butts` | Not Ported | [AT_ElectronRange.h](https://github.com/libamtrack/library/blob/master/include/AT_ElectronRange.h) |
-| `electron.electron_range_tabata` | Not Ported | [AT_ElectronRange.h](https://github.com/libamtrack/library/blob/master/include/AT_ElectronRange.h) |
 
 ## Track Structure Models
 
