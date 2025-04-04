@@ -2,9 +2,9 @@
 sidebar_position: 4
 ---
 
-# Function Status
+# Porting Status
 
-## Porting Status Overview
+## Status Overview
 
 This document provides information about which libamtrack functions have been ported to the pyamtrack Python wrapper. Not all libamtrack functions are currently available in pyamtrack, as the porting process is ongoing.
 
@@ -32,13 +32,23 @@ Functions for converting between different physical quantities.
 
 ## Stopping Power
 
-Functions for calculating stopping power of particles in materials.
+Functions for calculating stopping power of ions and protons and range of particles in materials.
 
 | Python Function | Status | C/C++ Source |
 |-----------------|--------|--------------|
 | `stopping.mass_stopping_power` | Not Ported | [AT_StoppingPower.h](https://github.com/libamtrack/library/blob/master/include/AT_StoppingPower.h#L151) |
-| `electron.max_electron_range` | Not Ported | [AT_ElectronRange.h](https://github.com/libamtrack/library/blob/master/include/AT_ElectronRange.h) |
+| `stopping.electron_range` | Not Ported | [AT_ElectronRange.h](https://github.com/libamtrack/library/blob/master/include/AT_ElectronRange.h#L230) |
 | `stopping.csda_range` | Not Ported | [AT_StoppingPower.h](https://github.com/libamtrack/library/blob/master/include/AT_DataRange.h#L112) |
+| `stopping.bortfeld_proton_range` | Not Ported | [AT_ProtonAnalyticalBeamParameters.h](https://github.com/libamtrack/library/blob/master/include/AT_ProtonAnalyticalBeamParameters.h#L90) |
+
+
+## Energy Loss Straggling
+
+Functions for energy loss straggling calculations.
+
+| Python Function | Status | C/C++ Source |
+|-----------------|--------|--------------|
+| `straggling.energy_loss_distribution` | Not Ported | [AT_EnergyLoss.c](https://github.com/libamtrack/library/blob/master/src/AT_EnergyLoss.c#L362) |
 
 
 ## Track Structure Models
@@ -47,11 +57,8 @@ Functions for track structure calculations.
 
 | Python Function | Status | C/C++ Source |
 |-----------------|--------|--------------|
-| `track.calculate_radial_dose` | During Porting | [AT_RDD.h](https://github.com/libamtrack/library/blob/master/include/AT_RDD.h) |
-| `track.get_rdd_index` | Not Ported | [AT_RDD.h](https://github.com/libamtrack/library/blob/master/include/AT_RDD.h) |
-| `track.rdd_katz_point_target` | Not Ported | [AT_RDD.h](https://github.com/libamtrack/library/blob/master/include/AT_RDD.h) |
-| `track.rdd_katz_extended_target` | Not Ported | [AT_RDD.h](https://github.com/libamtrack/library/blob/master/include/AT_RDD.h) |
-| `track.rdd_geiss` | Not Ported | [AT_RDD.h](https://github.com/libamtrack/library/blob/master/include/AT_RDD.h) |
+| `track.radial_dose` | Not Ported | [AT_RDD.h](https://github.com/libamtrack/library/blob/master/include/AT_RDD.h) |
+| `track.track_width` | Not Ported | [AT_RDD.h](https://github.com/libamtrack/library/blob/master/include/AT_RDD.h) |
 
 ## Cell Survival Models
 
@@ -59,19 +66,9 @@ Functions for calculating cell survival.
 
 | Python Function | Status | C/C++ Source |
 |-----------------|--------|--------------|
-| `survival.katz_model` | Not Ported | [AT_KatzModel.h](https://github.com/libamtrack/library/blob/master/include/AT_KatzModel.h) |
-| `survival.calculate_survival` | Not Ported | [AT_KatzModel.h](https://github.com/libamtrack/library/blob/master/include/AT_KatzModel.h) |
-| `survival.survival_from_dose` | Not Ported | [AT_KatzModel.h](https://github.com/libamtrack/library/blob/master/include/AT_KatzModel.h) |
+| `survival.katz_cell_survival` | Not Ported | [AT_KatzModel.h](https://github.com/libamtrack/library/blob/master/include/AT_KatzModel.h#L154) |
+| `survival.katz_inact_cross_sect` | Not Ported | [AT_KatzModel.h](https://github.com/libamtrack/library/blob/master/include/AT_KatzModel.h#L62) |
 
-## Energy Loss Straggling
-
-Functions for energy loss straggling calculations.
-
-| Python Function | Status | C/C++ Source |
-|-----------------|--------|--------------|
-| `straggling.calculate_vavilov_energy_loss` | Not Ported | [AT_EnergyLoss.h](https://github.com/libamtrack/library/blob/master/include/AT_EnergyLoss.h) |
-| `straggling.calculate_landau_energy_loss` | Not Ported | [AT_EnergyLoss.h](https://github.com/libamtrack/library/blob/master/include/AT_EnergyLoss.h) |
-| `straggling.energy_loss_after_slab` | Not Ported | [AT_EnergyLoss.h](https://github.com/libamtrack/library/blob/master/include/AT_EnergyLoss.h) |
 
 ## Contributing to Function Porting
 
