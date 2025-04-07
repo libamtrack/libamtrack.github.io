@@ -32,7 +32,7 @@ Functions for accessing and manipulating material properties.
 
 | Python Module | Status | C/C++ Source |
 |-----------------|--------|--------------|
-| `material` | ❌ Not Ported | [AT_MaterialData.h](https://github.com/libamtrack/library/blob/master/include/AT_DataMaterial.h#L82) |
+| `material` | 🚧 During Porting | [AT_MaterialData.h](https://github.com/libamtrack/library/blob/master/include/AT_DataMaterial.h#L82) |
 
 
 ## Converters
