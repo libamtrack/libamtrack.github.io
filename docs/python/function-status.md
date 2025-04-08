@@ -32,7 +32,7 @@ Functions for accessing and manipulating material properties.
 
 | Python Module | Status | C/C++ Source |
 |-----------------|--------|--------------|
-| `material` | 🚧 During Porting | [AT_MaterialData.h](https://github.com/libamtrack/library/blob/master/include/AT_DataMaterial.h#L82) |
+| [`materials`](API/materials.md) | ✅ Fully Ported | [AT_MaterialData.h](https://github.com/libamtrack/library/blob/master/include/AT_DataMaterial.h#L82) |
 
 
 ## Converters
@@ -59,7 +59,7 @@ Functions for calculating stopping power of ions and protons and range of partic
 | Python Function | Status | C/C++ Source |
 |-----------------|--------|--------------|
 | `stopping.mass_stopping_power` | ❌ Not Ported | [AT_StoppingPower.h](https://github.com/libamtrack/library/blob/master/include/AT_StoppingPower.h#L151) |
-| `stopping.electron_range` | 🚧 During Porting | [AT_ElectronRange.h](https://github.com/libamtrack/library/blob/master/include/AT_ElectronRange.h#L230) |
+| [`stopping.electron_range`](API/stopping/electron_range.md) | ✅ Fully Ported | [AT_ElectronRange.h](https://github.com/libamtrack/library/blob/master/include/AT_ElectronRange.h#L230) |
 | `stopping.csda_range` | ❌ Not Ported | [AT_StoppingPower.h](https://github.com/libamtrack/library/blob/master/include/AT_DataRange.h#L112) |
 | `stopping.bortfeld_proton_range` | ❌ Not Ported | [AT_ProtonAnalyticalBeamParameters.h](https://github.com/libamtrack/library/blob/master/include/AT_ProtonAnalyticalBeamParameters.h#L90) |
 
