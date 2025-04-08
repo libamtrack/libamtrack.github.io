@@ -19,9 +19,9 @@ Calculate the maximum electron range in a material using different stopping powe
 
 - **`material`** (optional): The material through which the electrons travel. Can be specified as:
   - An integer ID (e.g., `1` for water)
-  - A [`Material`](../API/materials.md) object
+  - A [`Material`](../materials.md) object
   - Defaults to `1` (liquid water)
-  See the [Materials documentation](../API/materials.md) for detailed information about available materials.
+  See the [Materials documentation](../materials.md) for detailed information about available materials.
 
 - **`model`** (optional): The stopping power model to use. Can be specified as:
   - A string name (e.g., `"tabata"`)
