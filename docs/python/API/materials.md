@@ -108,7 +108,7 @@ except ValueError as e:
 
 ## Using Materials in Calculations
 
-Materials are used throughout pyamtack for various calculations:
+Materials are used throughout pyamtrack for various calculations:
 
 ```python
 import pyamtrack
