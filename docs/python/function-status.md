@@ -24,7 +24,7 @@ Functions for accessing and manipulating particle data.
 
 | Python Module | Status | C/C++ Source |
 |-----------------|--------|--------------|
-| `particle` | ❌ Not Ported | [AT_ParticleData.h](https://github.com/libamtrack/library/blob/master/include/AT_DataParticle.h#L82) |
+| `particles` | ❌ Not Ported | [AT_ParticleData.h](https://github.com/libamtrack/library/blob/master/include/AT_DataParticle.h#L82) |
 
 ## Material Data
 
