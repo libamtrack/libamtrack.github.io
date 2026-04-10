@@ -30,7 +30,7 @@ There are a few ways a particle object can be created:
     carbon = pyamtrack.particles.C
     ```
 
-- Using a particle code (A*1000 + Z)
+- Using a particle code (Z*1000 + A)
     ```python
     carbon = pyamtrack.particles.Particle.from_number(6012)
     ```
