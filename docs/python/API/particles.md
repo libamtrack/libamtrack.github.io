@@ -26,6 +26,7 @@ There are a few ways a particle object can be created:
 - Using predefined particle constants
 
     ```python
+    import pyamtrack.particles
     carbon = pyamtrack.particles.C
     ```
 
