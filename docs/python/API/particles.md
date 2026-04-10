@@ -43,7 +43,7 @@ There are a few ways a particle object can be created:
     ```python
     carbon = pyamtrack.particles.Particle(6)
     ```
-    Warning!!! Particle created this way will have A parameter set to None. It should represent only the atomic nucleus.
+    Warning: A particle created this way has `A=None`, so no specific isotope is selected. It represents the element or atomic nucleus identified only by `Z`, unlike isotope-specific inputs such as `"12C"` or `6012`.
 
 ### Passing particles as function arguments
 
