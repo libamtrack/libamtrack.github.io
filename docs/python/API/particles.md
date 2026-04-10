@@ -4,7 +4,7 @@ The library provides a comprehensive particle system for particle transport calc
 
 ## Overview
 
-Each particle is characterized by physical properties, including particle number, symbol, and charge state.
+Each particle is characterized by physical properties, including its identifier, element name and acronym, mass number (`A`), and atomic number (`Z`).
 
 ## Particle Properties
 
