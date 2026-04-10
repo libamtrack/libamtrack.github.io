@@ -47,7 +47,7 @@ There are a few ways a particle object can be created:
 
 ### Passing particles as function arguments
 
-Aside from passing the particle object as an argument
+You can pass a `Particle` object directly as an argument:
 
 ```python
 import pyamtrack.stopping as stp
@@ -57,7 +57,7 @@ particle_carbon = particles.C
 results_carbon = stp.stopping_power(energies, particle=particle_carbon, material=1)
 ```
 
-There are other ways:
+But there are other ways:
 - Nuclide notation string (e.g., "12C")
     ```python
     import pyamtrack.stopping as stp
