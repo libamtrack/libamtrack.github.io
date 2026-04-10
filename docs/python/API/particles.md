@@ -51,8 +51,7 @@ You can pass a `Particle` object directly as an argument:
 
 ```python
 import pyamtrack.stopping as stp
-import pyamtrack.particles
-
+from pyamtrack import particles
 particle_carbon = particles.C
 results_carbon = stp.stopping_power(energies, particle=particle_carbon, material=1)
 ```
