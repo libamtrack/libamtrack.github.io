@@ -66,6 +66,22 @@ If they do not match:
 
 `pyamtrack` accepts `numpy.ndarray`, but the wrappers have important constraints depending on the execution mode.
 
+#### Floating-point precision (dtype) and casting
+
+Most `pyamtrack` numerical kernels are implemented in C/C++ and operate on **double precision** (`float64`) values. As a result, `numpy.ndarray` inputs are typically **cast to `float64`** (C++ `double`) by the binding/wrapper layer before computation.
+
+This has a few important consequences:
+
+- Passing `float32`, `float16`, or other floating dtypes usually **does not preserve the original precision** during computation; values are converted to `float64` first.
+- The conversion may require an **implicit copy** of the input array, which can increase memory use and reduce performance for large arrays.
+- If you need strict control over dtype/precision for performance or memory reasons, be aware that the current `pyamtrack` API is effectively **`float64`-centric** for floating-point computations.
+
+**Recommendation:** when using NumPy arrays, prefer explicit `float64` inputs to make the conversion behavior obvious:
+
+```python
+x = np.asarray(x, dtype=np.float64)
+```
+
 #### 2.3.1. Element-wise mode (“zip-style” vectorization)
 In element-wise mode (`wrap_multiargument_function`), NumPy arrays must be:
 - **one-dimensional (1-D)**
