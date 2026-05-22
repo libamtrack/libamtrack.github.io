@@ -1,108 +1,208 @@
----
-sidebar_position: 6
----
+# pyamtrack — input types and vectorization behavior
 
-# Type Conversion Tables for Ported Functions
+This document describes which Python/NumPy types are accepted by `pyamtrack` functions and how `pyamtrack` interprets inputs (scalars, lists, `numpy.ndarray`) and what types it returns.
 
-This page shows input/output type conversions for all fully ported functions in pyamtrack.
+It specifically covers functions exported by modules (e.g. `pyamtrack.stopping`, `pyamtrack.converters`) that use the shared C++ wrappers in `src/wrapper/`.
 
 ---
 
-## `converters.beta_from_energy`
+## 1. Glossary
 
-Converts kinetic energy to relativistic beta.
+### Scalar
+In `pyamtrack`, a scalar is a Python object of type:
+- `float`
+- `int`
 
-| Python Input | → C Input | → C Output | → Python Output |
-|---|---|---|---|
-| `float` (energy in MeV) | `double` | `double` | `float` |
-| `list` of floats | `double*` array | `double*` array | `np.ndarray` (float64) |
-| `np.ndarray` (float64) | `double*` array | `double*` array | `np.ndarray` (float64) |
+A scalar is treated as a single value (not as a sequence).
+
+### Array-like
+In `pyamtrack`, “array-like” means:
+- `list` (Python list)
+- `numpy.ndarray`
+
+**Note:** `tuple` is not treated as array-like and will usually raise a `TypeError`.
+
+---
+
+## 2. Input types
+
+### 2.1. Numeric Python values
+
+Most commonly accepted types are:
+- `float`
+- `int`
+
+Many functions also work with mixed numeric elements inside lists (e.g. `[1, 2.0, 3]`), but this depends on the conversion path.
+
+If an argument is not `float`, `int`, `list`, or `numpy.ndarray`, a type error will be raised.
 
 **Example:**
-```python
-import numpy as np
-import pyamtrack
-
-# Scalar
-beta = pyamtrack.converters.beta_from_energy(150.0)
-
-# Array
-energies = np.linspace(10.0, 1000.0, 100, dtype=np.float64)
-betas = pyamtrack.converters.beta_from_energy(energies)
+```py
+pyamtrack.stopping.electron_range((50.0,))
+# TypeError: Input must be a float, int, list, or 0-D/1-D NumPy array.
 ```
 
 ---
 
-## `converters.energy_from_beta`
+### 2.2. Python lists (`list`)
 
-Converts relativistic beta to kinetic energy.
+Many functions accept a list of values and return a vectorized result.
 
-| Python Input | → C Input | → C Output | → Python Output |
-|---|---|---|---|
-| `float` (beta value) | `double` | `double` | `float` |
-| `list` of floats | `double*` array | `double*` array | `np.ndarray` (float64) |
-| `np.ndarray` (float64) | `double*` array | `double*` array | `np.ndarray` (float64) |
+Example:
+```py
+pyamtrack.stopping.electron_range([50.0, 100.0, 150.0])
+# -> returns numpy.ndarray
+```
 
-**Example:**
-```python
-import numpy as np
-import pyamtrack
+#### List lengths in multi-argument functions
+For functions that take multiple arguments (e.g. `electron_range(energy, material, model)`), if you pass lists in more than one argument, their lengths must match in “element-wise” mode.
 
-# Scalar
-energy = pyamtrack.converters.energy_from_beta(0.5)
+If they do not match:
+- `ValueError: Incompatible lists/arrays size`
 
-# Array
-betas = np.linspace(0.1, 0.9, 50, dtype=np.float64)
-energies = pyamtrack.converters.energy_from_beta(betas)
+---
+
+### 2.3. NumPy arrays (`numpy.ndarray`)
+
+`pyamtrack` accepts `numpy.ndarray`, but the wrappers have important constraints depending on the execution mode.
+
+#### 2.3.1. Element-wise mode (“zip-style” vectorization)
+In element-wise mode (`wrap_multiargument_function`), NumPy arrays must be:
+- **one-dimensional (1-D)**
+
+If `ndim != 1`:
+- `ValueError: Input NumPy array must be 1-D.`
+
+Dtype:
+- values are typically cast to `double` (float64) in the wrapper
+- if the dtype cannot be cast:
+  - `TypeError: 1-D NumPy array dtype cannot be cast to double or input is not suitable.`
+
+Example:
+```py
+energy = np.array([50.0, 100.0], dtype=np.float64)
+pyamtrack.stopping.electron_range(energy)
+# -> numpy.ndarray(shape=(2,))
+```
+
+#### 2.3.2. Cartesian product mode (combinatorics)
+In cartesian product mode (`wrap_cartesian_product_function`), NumPy arrays:
+- may be multi-dimensional (e.g. `(2,2)`, `(10,10,10)`),
+- but must be **C-contiguous** (row-major contiguous in memory).
+
+If an array is not C-contiguous:
+- `ValueError: NDArray must be C-contiguous. Use numpy.ascontiguousarray(your_array) before passing it.`
+
+In this mode, input ndarrays are flattened to 1-D for generating combinations, while the original shape is recorded for shaping the output (depending on the wrapper).
+
+Example:
+```py
+energy = np.array([[50.0, 100.0],
+                   [150.0, 200.0]], order="C")
+materials = np.array([1, 2, 3], dtype=np.int64)
+models = np.array([7, 8], dtype=np.int64)
+
+pyamtrack.stopping.electron_range(energy, materials, models, cartesian_product=True)
+# -> numpy.ndarray with a shape derived from input shapes
 ```
 
 ---
 
-## `stopping.electron_range`
+## 3. Return types (outputs)
 
-Calculates electron range in materials using various models.
+### 3.1. Scalar in → scalar out
+If all arguments are scalars (`float`/`int`), the result is a scalar (Python `float`).
 
-| Python Input | → C Input | → C Output | → Python Output |
-|---|---|---|---|
-| `float` (energy in MeV) | `double` | `double` | `float` |
-| `list` of floats | `double*` array | `double*` array | `np.ndarray` (float64) |
-| `np.ndarray` (float64) | `double*` array | `double*` array | `np.ndarray` (float64) |
-| `int` (material ID) | `int` | — | — |
-| `str` (model name) | `char*` | — | — |
+Example:
+```py
+pyamtrack.stopping.electron_range(100.0, 1, 7)
+# -> float
+```
 
-**Example:**
-```python
-import numpy as np
-import pyamtrack
+### 3.2. Array-like in → numpy.ndarray out
+If at least one argument is a list or `numpy.ndarray` in element-wise mode, the result is usually a 1‑D `numpy.ndarray` with length matching the list/array length.
 
-# Scalar
-range_cm = pyamtrack.stopping.electron_range(150.0, material=1, model="tabata")
+Example:
+```py
+pyamtrack.stopping.electron_range([50.0, 100.0], 1, 7)
+# -> np.ndarray(shape=(2,))
+```
 
-# Array (recommended for plots)
-energies = np.linspace(10.0, 1000.0, 500, dtype=np.float64)
-ranges = pyamtrack.stopping.electron_range(energies, material=1, model="tabata")
+### 3.3. Cartesian product → numpy.ndarray (multi-dimensional)
+If `cartesian_product=True`, the result is a `numpy.ndarray` whose size corresponds to the number of argument combinations.
+
+---
+
+## 4. Broadcasting (scalar expansion)
+
+In element-wise mode, if you pass a mix of:
+- one argument as a vector (list/ndarray) of length `N`,
+- another argument as a scalar,
+
+the scalar will be **expanded** to length `N` (broadcast to 1‑D) and the computation is done element-wise.
+
+Example:
+```py
+energy = [50.0, 100.0, 150.0]
+pyamtrack.stopping.electron_range(energy, material=1, model=7)
+# model and material are scalars -> treated like [1, 1, 1] and [7, 7, 7]
 ```
 
 ---
 
-## `materials` module functions
+## 5. Errors and exceptions
 
-Access and query material properties.
+Below are typical exceptions raised by the wrappers:
 
-| Python Input | → C Input | → C Output | → Python Output |
-|---|---|---|---|
-| `int` (material ID) | `int` | — | — |
-| `str` (material name) | `char*` | — | — |
-| `int` (property ID) | `int` | `double` / `int` | `float` / `int` |
-| `list` of ints | `int*` array | `double*` / `int*` array | `np.ndarray` |
+### 5.1. Unsupported argument type
+**TypeError**:
+- `Input must be a float, int, list, or 0-D/1-D NumPy array.`
+- `Input must be a float, int, list, or NumPy array.` (cartesian product mode)
 
-**Example:**
-```python
-import pyamtrack
+Typical causes:
+- passing `tuple`, `dict`, user-defined objects, `None`, etc.
 
-# Query material property
-density = pyamtrack.materials.get_density(1)  # material ID 1
+### 5.2. Incompatible list/array lengths in element-wise mode
+**ValueError**:
+- `Incompatible lists/arrays size`
 
-# List available materials
-materials = pyamtrack.materials.list_materials()
-```
+### 5.3. Wrong ndarray dimensionality in element-wise mode
+**ValueError**:
+- `Input NumPy array must be 1-D.`
+
+### 5.4. Non C-contiguous ndarray in cartesian product mode
+**ValueError**:
+- `NDArray must be C-contiguous. Use numpy.ascontiguousarray(your_array) before passing it.`
+
+### 5.5. Dtype cannot be cast to double
+**TypeError**:
+- `1-D NumPy array dtype cannot be cast to double or input is not suitable.`
+
+---
+
+## 6. Practical recommendations
+
+1. If you have a `tuple`, convert it to a list:
+   ```py
+   x = (1.0, 2.0)
+   x = list(x)
+   ```
+
+2. If you have multi-dimensional NumPy data and use `cartesian_product=True`, ensure it is C-contiguous:
+   ```py
+   x = np.ascontiguousarray(x)
+   ```
+
+3. If a function in element-wise mode complains about `1-D`, use `.ravel()` or `.reshape(-1)`:
+   ```py
+   x = np.asarray(x).ravel()
+   ```
+
+---
+
+## 7. “Element-wise” vs “Cartesian product” — quick comparison
+
+| Mode | Purpose | How it combines arguments | Typical output |
+|------|---------|----------------------------|----------------|
+| element-wise | zip-style vectorization | (a[i], b[i], c[i]) | 1-D `np.ndarray` |
+| cartesian product | combinations | all combinations of arguments | N-D `np.ndarray` |
