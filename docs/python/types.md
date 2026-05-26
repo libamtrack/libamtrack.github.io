@@ -12,6 +12,7 @@ It specifically covers functions exported by modules (e.g. `pyamtrack.stopping`,
 In `pyamtrack`, a scalar is a Python object of type:
 - `float`
 - `int`
+- `np.float64/32`  
 
 A scalar is treated as a single value (not as a sequence).
 
@@ -20,9 +21,25 @@ In `pyamtrack`, “array-like” means:
 - `list` (Python list)
 - `numpy.ndarray`
 
-**Note:** `tuple` is not treated as array-like and will usually raise a `TypeError`.
+**Note:** `tuple` and `set` is not treated as array-like and will usually raise a `TypeError`. `NOT IMPLEMENTED YET`
+
+**Note:** `0-d numpy.ndarray` and `0-d python lists` are treated as arrays-like type not scalars
 
 ---
+
+### Special floating values
+`NaN` and `±inf` are accepted as scalar/array inputs and are forwarded to the underlying kernels. Outputs follow IEEE‑754 semantics and the specific model implementation; in practice, `NaN` inputs yield `NaN` outputs, and `inf` inputs may yield `NaN`.
+
+```python
+import pyamtrack.stopping as s
+x = float('inf')
+
+# returns nan
+s.electron_range(x*0)
+
+#return 0.0
+s.electron_range(-1/x)
+```
 
 ## 2. Input types
 
@@ -31,6 +48,7 @@ In `pyamtrack`, “array-like” means:
 Most commonly accepted types are:
 - `float`
 - `int`
+- `np.float64/32`  
 
 Many functions also work with mixed numeric elements inside lists (e.g. `[1, 2.0, 3]`), but this depends on the conversion path.
 
@@ -40,6 +58,22 @@ If an argument is not `float`, `int`, `list`, or `numpy.ndarray`, a type error w
 ```py
 pyamtrack.stopping.electron_range((50.0,))
 # TypeError: Input must be a float, int, list, or 0-D/1-D NumPy array.
+```
+
+```python
+import pyamtrack.stopping as s
+
+# float 
+s.electron_range(50.0)
+
+# int
+s.electron_range(1)
+
+import numpy as np
+
+# np.float64
+s.electron_range(np.float64(50.0))
+
 ```
 
 ---
