@@ -32,13 +32,15 @@ In `pyamtrack`, “array-like” means:
 
 ```python
 import pyamtrack.stopping as s
-x = float('inf')
+x_MeV = float('inf')
 
-# returns nan
-s.electron_range(x*0)
+range_m = s.electron_range(E_MeV = float("nan"))
+# float("nan) -> NaN (undefined)
+# range_m -> NaN
 
-#return 0.0
-s.electron_range(-1/x)
+range_m = s.electron_range(E_MeV = -1 / x_MeV)
+# -1 / x_MeV -> -0.0
+# range_m -> 0.0  (zero-energy electron has zero range)
 ```
 
 ## 2. Input types
@@ -63,16 +65,15 @@ pyamtrack.stopping.electron_range((50.0,))
 ```python
 import pyamtrack.stopping as s
 
-# float 
-s.electron_range(50.0)
+range_m = s.electron_range(E_MeV = 50.0)
+# E_MeV = 50.0 (float) -> range_m = 0.2537 (float)
 
-# int
-s.electron_range(1)
+range_m = s.electron_range(E_MeV = 1)
+# E_MeV = 1 (int, promoted to double internally) -> range_m = 0.0044 (float)
 
 import numpy as np
-
-# np.float64
-s.electron_range(np.float64(50.0))
+range_m = s.electron_range(E_MeV = np.float64(50.0))
+# E_MeV = 50.0 (np.float64) -> range_m = 0.2537 (Python float, NOT np.float64)
 
 ```
 
@@ -84,8 +85,11 @@ Many functions accept a list of values and return a vectorized result.
 
 Example:
 ```py
-pyamtrack.stopping.electron_range([50.0, 100.0, 150.0])
-# -> returns numpy.ndarray
+E_MeV = [50.0, 100.0, 150.0]
+range_m = pyamtrack.stopping.electron_range(E_MeV = E_MeV)
+# E_MeV -> [50.0, 100.0, 150.0] MeV
+# range_m -> numpy.ndarray([0.2537, 0.4245, 0.5689])  (shape (3,), dtype float64)
+# range_m[i] corresponds to E_MeV[i], same order preserved
 ```
 
 #### List lengths in multi-argument functions
@@ -130,9 +134,9 @@ Dtype:
 
 Example:
 ```py
-energy = np.array([50.0, 100.0], dtype=np.float64)
-pyamtrack.stopping.electron_range(energy)
-# -> numpy.ndarray(shape=(2,))
+E_MeV = np.array([50.0, 100.0], dtype=np.float64)
+range_m = pyamtrack.stopping.electron_range(E_MeV = E_MeV)
+# range_m -> numpy.ndarray([0.2537, 0.4245])  (shape=(2,), dtype=float64)
 ```
 
 #### 2.3.2. Cartesian product mode (combinatorics)
@@ -147,13 +151,23 @@ In this mode, input ndarrays are flattened to 1-D for generating combinations, w
 
 Example:
 ```py
-energy = np.array([[50.0, 100.0],
-                   [150.0, 200.0]], order="C")
-materials = np.array([1, 2, 3], dtype=np.int64)
-models = np.array([7, 8], dtype=np.int64)
+import pyamtrack
+import numpy as np
 
-pyamtrack.stopping.electron_range(energy, materials, models, cartesian_product=True)
-# -> numpy.ndarray with a shape derived from input shapes
+energy_MeV = np.array([[50.0, 100.0],
+                        [150.0, 200.0]], order="C")   # 4 energie (flattened), MeV
+material = np.array([1, 2, 3], dtype=np.int64)         # 3 kody materiałów
+model = ['tabata', 'waligorski']                       # 2 modele (lista, NIE ndarray!)
+
+range_m = pyamtrack.stopping.electron_range(
+    energy_MeV = energy_MeV,
+    material = material,
+    model = model,
+    cartesian_product = True,
+)
+# range_m.shape -> (4, 3, 2)
+# range_m[i, j, k] = electron_range(E_MeV.flat[i], material_id[j], model_id[k])
+# total combinations = 4 * 3 * 2 = 24
 ```
 
 ---
@@ -165,8 +179,8 @@ If all arguments are scalars (`float`/`int`), the result is a scalar (Python `fl
 
 Example:
 ```py
-pyamtrack.stopping.electron_range(100.0, 1, 7)
-# -> float
+range_m = pyamtrack.stopping.electron_range(E_MeV = 100.0, material_id = 1, model_id = 7)
+# range_m -> 0.4245 (Python float)
 ```
 
 ### 3.2. Array-like in → numpy.ndarray out
@@ -174,8 +188,10 @@ If at least one argument is a list or `numpy.ndarray` in element-wise mode, the 
 
 Example:
 ```py
-pyamtrack.stopping.electron_range([50.0, 100.0], 1, 7)
-# -> np.ndarray(shape=(2,))
+E_MeV = [50.0, 100.0]
+range_m = pyamtrack.stopping.electron_range(E_MeV = E_MeV, material_id = 1, model_id = 7)
+# material_id=1 and model_id=7 stay scalar -> broadcast to match E_MeV's length
+# range_m -> np.ndarray([0.2537, 0.4245])  (shape=(2,), dtype=float64)
 ```
 
 ### 3.3. Cartesian product → numpy.ndarray (multi-dimensional)
@@ -193,9 +209,15 @@ the scalar will be **expanded** to length `N` (broadcast to 1‑D) and the compu
 
 Example:
 ```py
-energy = [50.0, 100.0, 150.0]
-pyamtrack.stopping.electron_range(energy, material=1, model=7)
-# model and material are scalars -> treated like [1, 1, 1] and [7, 7, 7]
+E_MeV = [50.0, 100.0, 150.0]
+range_m = pyamtrack.stopping.electron_range(E_MeV = E_MeV, material_id = 1, model_id = 7)
+# material_id=1, model_id=7 broadcast internally to:
+#   material_id = [1, 1, 1], model_id = [7, 7, 7]
+# equivalent to:
+#   electron_range(E_MeV=50.0,  material_id=1, model_id=7)
+#   electron_range(E_MeV=100.0, material_id=1, model_id=7)
+#   electron_range(E_MeV=150.0, material_id=1, model_id=7)
+# range_m -> np.ndarray([0.2537, 0.4245, 0.5689])
 ```
 
 ---
