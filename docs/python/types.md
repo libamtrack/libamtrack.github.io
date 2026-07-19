@@ -1,3 +1,6 @@
+---
+sidebar_position: 5
+---
 # pyamtrack — input types and vectorization behavior
 
 This document describes which Python/NumPy types are accepted by `pyamtrack` functions and how `pyamtrack` interprets inputs (scalars, lists, `numpy.ndarray`) and what types it returns.
@@ -12,7 +15,7 @@ It specifically covers functions exported by modules (e.g. `pyamtrack.stopping`,
 In `pyamtrack`, a scalar is a Python object of type:
 - `float`
 - `int`
-- `np.float64/32`  
+- `np.float64` / `np.float32`
 
 A scalar is treated as a single value (not as a sequence).
 
@@ -54,7 +57,7 @@ Most commonly accepted types are:
 
 Many functions also work with mixed numeric elements inside lists (e.g. `[1, 2.0, 3]`), but this depends on the conversion path.
 
-If an argument is not `float`, `int`, `list`, or `numpy.ndarray`, a type error will be raised.
+If an argument is not `float`, `int`, `list`, or `numpy.ndarray`, a `TypeError` will be raised.
 
 **Example:**
 ```py
@@ -155,9 +158,9 @@ import pyamtrack
 import numpy as np
 
 energy_MeV = np.array([[50.0, 100.0],
-                        [150.0, 200.0]], order="C")   # 4 energie (flattened), MeV
-material = np.array([1, 2, 3], dtype=np.int64)         # 3 kody materiałów
-model = ['tabata', 'waligorski']                       # 2 modele (lista, NIE ndarray!)
+                        [150.0, 200.0]], order="C")   # 4 energy values (flattened), MeV
+material = np.array([1, 2, 3], dtype=np.int64)         # 3 material IDs
+model = ['tabata', 'waligorski']                       # 2 models (Python list, NOT a NumPy array!)
 
 range_m = pyamtrack.stopping.electron_range(
     energy_MeV = energy_MeV,
