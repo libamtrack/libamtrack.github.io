@@ -1,7 +1,7 @@
 ---
 sidebar_position: 5
 ---
-# Input and Output Types
+# Data Types
 
 This document describes which Python/NumPy types are accepted by `pyamtrack` functions and how `pyamtrack` interprets inputs (scalars, lists, `numpy.ndarray`) and what types it returns.
 
@@ -35,13 +35,16 @@ In `pyamtrack`, “array-like” means:
 
 ```python
 import pyamtrack.stopping as s
-x_MeV = float('inf')
 
 range_m = s.electron_range(E_MeV = float("nan"))
 # float("nan) -> NaN (undefined)
 # range_m -> NaN
+```
 
-range_m = s.electron_range(E_MeV = -1 / x_MeV)
+```python
+import pyamtrack.stopping as s
+
+range_m = s.electron_range(E_MeV = -1 / float('inf'))
 # -1 / x_MeV -> -0.0
 # range_m -> 0.0  (zero-energy electron has zero range)
 ```
@@ -67,13 +70,19 @@ pyamtrack.stopping.electron_range((50.0,))
 
 ```python
 import pyamtrack.stopping as s
+```
+
+```python
 
 range_m = s.electron_range(E_MeV = 50.0)
 # E_MeV = 50.0 (float) -> range_m = 0.2537 (float)
 
+```
+```python
 range_m = s.electron_range(E_MeV = 1)
 # E_MeV = 1 (int, promoted to double internally) -> range_m = 0.0044 (float)
-
+```
+```python
 import numpy as np
 range_m = s.electron_range(E_MeV = np.float64(50.0))
 # E_MeV = 50.0 (np.float64) -> range_m = 0.2537 (Python float, NOT np.float64)
