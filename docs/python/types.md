@@ -1,7 +1,7 @@
 ---
 sidebar_position: 5
 ---
-# pyamtrack — input types and vectorization behavior
+# Input and Output Types
 
 This document describes which Python/NumPy types are accepted by `pyamtrack` functions and how `pyamtrack` interprets inputs (scalars, lists, `numpy.ndarray`) and what types it returns.
 
