@@ -5,8 +5,6 @@ sidebar_position: 5
 
 This document describes which Python/NumPy types are accepted by `pyamtrack` functions and how `pyamtrack` interprets inputs (scalars, lists, `numpy.ndarray`) and what types it returns.
 
-It specifically covers functions exported by modules (e.g. `pyamtrack.stopping`, `pyamtrack.converters`) that use the shared C++ wrappers in `src/wrapper/`.
-
 ---
 
 ## 1. Glossary
@@ -34,17 +32,17 @@ In `pyamtrack`, “array-like” means:
 `NaN` and `±inf` are accepted as scalar/array inputs and are forwarded to the underlying kernels. Outputs follow IEEE‑754 semantics and the specific model implementation; in practice, `NaN` inputs yield `NaN` outputs, and `inf` inputs may yield `NaN`.
 
 ```python
-import pyamtrack.stopping as s
+import pyamtrack # first we import the library
+```
 
-range_m = s.electron_range(E_MeV = float("nan"))
+```python
+range_m = pyamtrack.stopping.electron_range(E_MeV = float("nan"))
 # float("nan) -> NaN (undefined)
 # range_m -> NaN
 ```
 
 ```python
-import pyamtrack.stopping as s
-
-range_m = s.electron_range(E_MeV = -1 / float('inf'))
+range_m = pyamtrack.stopping.electron_range(E_MeV = -1 / float('inf'))
 # -1 / x_MeV -> -0.0
 # range_m -> 0.0  (zero-energy electron has zero range)
 ```
@@ -63,28 +61,30 @@ Many functions also work with mixed numeric elements inside lists (e.g. `[1, 2.0
 If an argument is not `float`, `int`, `list`, or `numpy.ndarray`, a `TypeError` will be raised.
 
 **Example:**
+
+```python
+import pyamtrack # first we import necessary libraries
+import numpy as np 
+```
+
 ```py
 pyamtrack.stopping.electron_range((50.0,))
 # TypeError: Input must be a float, int, list, or 0-D/1-D NumPy array.
 ```
 
-```python
-import pyamtrack.stopping as s
-```
 
 ```python
 
-range_m = s.electron_range(E_MeV = 50.0)
+range_m = pyamtrack.stopping.electron_range(E_MeV = 50.0)
 # E_MeV = 50.0 (float) -> range_m = 0.2537 (float)
 
 ```
 ```python
-range_m = s.electron_range(E_MeV = 1)
+range_m = pyamtrack.stopping.electron_range(E_MeV = 1)
 # E_MeV = 1 (int, promoted to double internally) -> range_m = 0.0044 (float)
 ```
 ```python
-import numpy as np
-range_m = s.electron_range(E_MeV = np.float64(50.0))
+range_m = pyamtrack.stopping.electron_range(E_MeV = np.float64(50.0))
 # E_MeV = 50.0 (np.float64) -> range_m = 0.2537 (Python float, NOT np.float64)
 
 ```
@@ -96,6 +96,12 @@ range_m = s.electron_range(E_MeV = np.float64(50.0))
 Many functions accept a list of values and return a vectorized result.
 
 Example:
+
+```python
+import pyamtrack # first we import the library
+```
+
+
 ```py
 E_MeV = [50.0, 100.0, 150.0]
 range_m = pyamtrack.stopping.electron_range(E_MeV = E_MeV)
@@ -145,6 +151,12 @@ Dtype:
   - `TypeError: 1-D NumPy array dtype cannot be cast to double or input is not suitable.`
 
 Example:
+
+```python
+import pyamtrack # first we import the library
+```
+
+
 ```py
 E_MeV = np.array([50.0, 100.0], dtype=np.float64)
 range_m = pyamtrack.stopping.electron_range(E_MeV = E_MeV)
@@ -165,7 +177,9 @@ Example:
 ```py
 import pyamtrack
 import numpy as np
+```
 
+```python
 energy_MeV = np.array([[50.0, 100.0],
                         [150.0, 200.0]], order="C")   # 4 energy values (flattened), MeV
 material = np.array([1, 2, 3], dtype=np.int64)         # 3 material IDs
@@ -190,6 +204,11 @@ range_m = pyamtrack.stopping.electron_range(
 If all arguments are scalars (`float`/`int`), the result is a scalar (Python `float`).
 
 Example:
+
+```python
+import pyamtrack # first we import the library
+```
+
 ```py
 range_m = pyamtrack.stopping.electron_range(E_MeV = 100.0, material_id = 1, model_id = 7)
 # range_m -> 0.4245 (Python float)
@@ -208,6 +227,34 @@ range_m = pyamtrack.stopping.electron_range(E_MeV = E_MeV, material_id = 1, mode
 
 ### 3.3. Cartesian product → numpy.ndarray (multi-dimensional)
 If `cartesian_product=True`, the result is a `numpy.ndarray` whose size corresponds to the number of argument combinations.
+
+Example:
+
+```py
+import pyamtrack
+import numpy as np
+```
+
+```py
+
+E_MeV = np.array([50.0, 100.0])           # 2 energies
+material_id = [1, 2, 3]                   # 3 materials
+model_id = [7, 8]                         # 2 models
+
+range_m = pyamtrack.stopping.electron_range(
+    E_MeV=E_MeV,
+    material_id=material_id,
+    model_id=model_id,
+    cartesian_product=True,
+)
+
+print(range_m.shape)
+# (2, 3, 2)
+
+# Interpretation:
+# range_m[i, j, k] = electron_range(E_MeV[i], material_id[j], model_id[k])
+# total combinations = 2 * 3 * 2 = 12
+```
 
 ---
 
