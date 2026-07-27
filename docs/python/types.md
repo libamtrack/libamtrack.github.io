@@ -37,13 +37,13 @@ import pyamtrack # first we import the library
 
 ```python
 range_m = pyamtrack.stopping.electron_range(E_MeV = float("nan"))
-# float("nan) -> NaN (undefined)
+# float("nan") -> NaN (undefined)
 # range_m -> NaN
 ```
 
 ```python
 range_m = pyamtrack.stopping.electron_range(E_MeV = -1 / float('inf'))
-# -1 / x_MeV -> -0.0
+# -1 / float('inf') -> -0.0
 # range_m -> 0.0  (zero-energy electron has zero range)
 ```
 
@@ -186,13 +186,13 @@ material = np.array([1, 2, 3], dtype=np.int64)         # 3 material IDs
 model = ['tabata', 'waligorski']                       # 2 models (Python list, NOT a NumPy array!)
 
 range_m = pyamtrack.stopping.electron_range(
-    energy_MeV = energy_MeV,
-    material = material,
-    model = model,
-    cartesian_product = True,
+     energy_MeV,
+     material=material,
+     model=model,
+     cartesian_product=True,
 )
 # range_m.shape -> (4, 3, 2)
-# range_m[i, j, k] = electron_range(E_MeV.flat[i], material_id[j], model_id[k])
+# range_m[i, j, k] = electron_range(energy_MeV.flat[i], material[j], model[k])
 # total combinations = 4 * 3 * 2 = 24
 ```
 
@@ -268,9 +268,8 @@ the scalar will be **expanded** to length `N` (broadcast to 1‑D) and the compu
 
 Example:
 ```py
-E_MeV = [50.0, 100.0, 150.0]
-range_m = pyamtrack.stopping.electron_range(E_MeV = E_MeV, material_id = 1, model_id = 7)
-# material_id=1, model_id=7 broadcast internally to:
+energies_MeV = [50.0, 100.0, 150.0]
+range_m = pyamtrack.stopping.electron_range(energies_MeV, material=1, model=7)
 #   material_id = [1, 1, 1], model_id = [7, 7, 7]
 # equivalent to:
 #   electron_range(E_MeV=50.0,  material_id=1, model_id=7)
