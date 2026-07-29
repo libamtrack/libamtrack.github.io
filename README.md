@@ -1,6 +1,6 @@
 # libamtrack web documentation
 
-This repository hosts source code of the libamtrack documentation available at [libamtrack.github.io](libamtrack.github.io)
+This repository hosts source code of the libamtrack documentation available at [libamtrack.github.io](https://libamtrack.github.io)
 
 ## To install run:
 
@@ -14,3 +14,4 @@ yarn install
 yarn run start
 ```
 This will start a local server at `http://localhost:3000` and watch for changes in the documentation files.
+
