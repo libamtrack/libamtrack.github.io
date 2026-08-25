@@ -22,6 +22,13 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Checkout pinned libamtrack source
+        uses: actions/checkout@v7
+        with:
+          repository: libamtrack/library
+          ref: ef78da9ac3342dadbc1854df9534d45ccaeeb3c9
+          path: .sourcey/library
+
       - name: Set up Node.js
         uses: actions/setup-node@v7
         with:
@@ -30,6 +37,20 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
+
+      - name: Install Doxygen
+        run: sudo apt-get update && sudo apt-get install --yes doxygen
+
+      - name: Prepare the C API source
+        run: yarn prepare:api
+
+      - name: Generate Doxygen XML
+        working-directory: .sourcey/library
+        run: |
+          (cat Doxyfile; printf '\nOUTPUT_DIRECTORY = doxygen-sourcey\nCREATE_SUBDIRS = NO\nGENERATE_XML = YES\nGENERATE_HTML = NO\nWARN_AS_ERROR = NO\nINPUT = include sourcey-groups.dox\n') | doxygen -
+
+      - name: Build the Sourcey C API reference
+        run: yarn build:api
 
       - name: Build the site
         run: yarn build

@@ -65,6 +65,11 @@ const config: Config = {
           label: 'C Library',
         },
         {
+          href: 'https://libamtrack.github.io/api/',
+          label: 'C API Reference',
+          position: 'left',
+        },
+        {
           type: 'docSidebar',
           sidebarId: 'pythonSidebar',
           position: 'left',

@@ -6,6 +6,8 @@
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
     "build": "docusaurus build",
+    "prepare:api": "node scripts/prepare-sourcey-doxygen.mjs .sourcey/library",
+    "build:api": "sourcey build -o static/api && node scripts/fix-sourcey-links.mjs static/api /api/",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
@@ -28,6 +30,7 @@
     "@docusaurus/tsconfig": "3.9.2",
     "@docusaurus/types": "3.9.2",
     "baseline-browser-mapping": "^2.11.7",
+    "sourcey": "3.6.5",
     "typescript": "~5.9.3"
   },
   "browserslist": {
