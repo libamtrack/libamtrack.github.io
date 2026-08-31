@@ -85,8 +85,8 @@ Functions for proton pencil beam dose and LET calculations.
 
 | Python Function | Status | C/C++ Source |
 |-----------------|--------|--------------|
-| `proton.bortfeld_dose` | ❌ Not Ported | [AT_ProtonAnalyticalModels.h](https://github.com/libamtrack/library/blob/master/include/AT_ProtonAnalyticalModels.h#L63) |
-| `proton.wilkens_let` | ❌ Not Ported | [AT_ProtonAnalyticalModels.h](https://github.com/libamtrack/library/blob/master/include/AT_ProtonAnalyticalModels.h#L106) |
+| `proton.bortfeld_dose` | ✅ Fully Ported | [AT_ProtonAnalyticalModels.h](https://github.com/libamtrack/library/blob/master/include/AT_ProtonAnalyticalModels.h#L63) |
+| `proton.wilkens_let` | ✅ Fully Ported | [AT_ProtonAnalyticalModels.h](https://github.com/libamtrack/library/blob/master/include/AT_ProtonAnalyticalModels.h#L106) |
 
 ## Track Structure Models
 
