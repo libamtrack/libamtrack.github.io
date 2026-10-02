@@ -54,8 +54,7 @@ pyamtrack.proton_models.dose_bortfeld(
 - **`depth_cm`** (`float`, `list`, or NumPy array): Depth in the material
   `[cm]`. Values must be non-negative.
 - **`fluence_cm2`** (`float`, `list`, or NumPy array): Proton fluence
-  `[1/cm²]`. 
-  fluence.
+  `[1/cm²]`.
 - **`energy_MeV`** (`float`, `list`, or NumPy array): Initial proton kinetic energy
   `[MeV]`. Values must be in the inclusive range `[0.1, 10000.0]`.
 - **`energy_spread_fraction`** (`float`, `list`, or NumPy array, optional):
